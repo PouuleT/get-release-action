@@ -1,0 +1,13 @@
+name: 'Get a Release'
+description: 'Get a given release by a tag in your repository'
+author: 'PouuleT'
+inputs:
+  tag_name:
+    description: 'The name of the tag that must be retrieved ( defaults to the tag of the current release )'
+    required: false
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'tag'
+  color: 'gray-dark'

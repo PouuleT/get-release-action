@@ -11,7 +11,7 @@ async function run() {
     const { owner, repo } = context.repo;
 
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
-    var tagName = core.getInput('tag_name', { required: true });
+    var tagName = core.getInput('tag_name', { required: false });
     if (!tagName) {
       // Default value will be the context ref
       tagName = context.ref
@@ -21,7 +21,7 @@ async function run() {
     // Get the release from its tag name
     // API Documentation: https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
     // Octokit Documentation: https://octokit.github.io/rest.js/v16#repos-get-release-by-tag
-    const getReleaseReponse = await octokit.repos.getReleaseByTag({
+    const getReleaseResponse = await github.repos.getReleaseByTag({
       owner,
       repo,
       tag,
@@ -33,7 +33,7 @@ async function run() {
     } = getReleaseResponse;
 
     // Set the output variables for use by other actions: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
-    core.setOutput('id', releaseId);
+    core.setOutput('id', releaseId.toString());
     core.setOutput('html_url', htmlUrl);
     core.setOutput('upload_url', uploadUrl);
   } catch (error) {
